@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Countdown</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+}
+
+/* ================= CONTAINER ================= */
+.container{
+  position:relative;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#5f2c82,#49a09d,#ff6ec4,#7873f5);
+  background-size:400% 400%;
+  animation:bg 16s ease infinite;
+  color:#fff;
+}
+
+@keyframes bg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* ================= CENTER ================= */
+.center{
+  z-index:5;
+  text-align:center;
+  padding:32px 40px;
+  border-radius:22px;
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(14px);
+  box-shadow:0 30px 80px rgba(0,0,0,.3);
+  max-width:90%;
+}
+
+.center h1{
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:800;
+  background:linear-gradient(45deg,#fff,#ffd700,#ff69b4);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* ================= COUNTDOWN ================= */
+.countdown{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  margin-top:25px;
+  justify-content:center;
+}
+
+.box{
+  min-width:90px;
+  padding:16px 20px;
+  border-radius:16px;
+  background:rgba(255,255,255,.25);
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.07)}
+}
+
+.box span{
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:700;
+}
+
+/* ================= SIDE IMAGES ================= */
+.side{
+  position:absolute;
+  top:0;
+  height:100%;
+  width:180px;
+  overflow:hidden;
+  display:none;
+}
+
+.left{left:10px}
+.right{right:10px}
+
+.image-track{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  animation:scroll 6s linear infinite;
+}
+
+.right .image-track{
+  animation-direction:reverse;
+}
+
+@keyframes scroll{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(-50%)}
+}
+
+.image-track img{
+  width:150px;
+  height:150px;
+  object-fit:cover;
+  border-radius:14px;
+  border:3px solid rgba(255,255,255,.7);
+  box-shadow:0 15px 35px rgba(0,0,0,.4);
+}
+
+/* ================= BIRTHDAY ================= */
+.birthday{
+  animation:zoom 1.2s ease;
+}
+@keyframes zoom{
+  from{opacity:0;transform:scale(.85)}
+  to{opacity:1;transform:scale(1)}
+}
+
+.birthday h2{
+  font-size:clamp(2rem,5vw,3.4rem);
+  font-weight:900;
+}
+
+.sub{
+  margin-top:12px;
+  font-size:1.1rem;
+}
+
+/* ================= CRACKERS ================= */
+.firework{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation:explode 1.2s ease-out forwards;
+}
+@keyframes explode{
+  0%{transform:translate(0,0) scale(1);opacity:1}
+  100%{transform:translate(var(--x),var(--y)) scale(0);opacity:0}
+}
+
+/* ================= MOBILE IMAGES ================= */
+.mobile-images{
+  display:none;
+  position:absolute;
+  bottom:10px;
+  width:100%;
+  overflow:hidden;
+}
+
+.mobile-track{
+  display:flex;
+  gap:12px;
+  animation:mobileScroll 12s linear infinite;
+}
+
+@keyframes mobileScroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+
+.mobile-track img{
+  width:90px;
+  height:90px;
+  border-radius:12px;
+  object-fit:cover;
+  border:2px solid #fff;
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:900px){
+  .side{display:none!important;}
+  .mobile-images{display:block;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- LEFT IMAGES -->
+  <div class="side left" id="leftSide">
+    <div class="image-track">
+      <img src="1.jpg"><img src="2.jpg"><img src="3.jpg"><img src="4.jpg"><img src="5.jpg">
+      <img src="1.jpg"><img src="2.jpg"><img src="3.jpg"><img src="4.jpg"><img src="5.jpg">
+    </div>
+  </div>
+
+  <!-- RIGHT IMAGES -->
+  <div class="side right" id="rightSide">
+    <div class="image-track">
+      <img src="6.jpg"><img src="7.jpg"><img src="8.jpg"><img src="9.jpg"><img src="10.jpg">
+      <img src="6.jpg"><img src="7.jpg"><img src="8.jpg"><img src="9.jpg"><img src="10.jpg">
+    </div>
+  </div>
+
+  <!-- MOBILE IMAGES -->
+  <div class="mobile-images" id="mobileImages">
+    <div class="mobile-track">
+      <img src="1.jpg"><img src="2.jpg"><img src="3.jpg"><img src="4.jpg"><img src="5.jpg">
+      <img src="6.jpg"><img src="7.jpg"><img src="8.jpg"><img src="9.jpg"><img src="10.jpg">
+      <img src="1.jpg"><img src="2.jpg"><img src="3.jpg"><img src="4.jpg"><img src="5.jpg">
+    </div>
+  </div>
+
+  <!-- CENTER -->
+  <div class="center" id="center">
+    <h1>🎉 Birthday Countdown 🎉</h1>
+
+    <div class="countdown" id="countdown">
+      <div class="box"><span id="days">00</span></div>
+      <div class="box"><span id="hours">00</span></div>
+      <div class="box"><span id="minutes">00</span></div>
+      <div class="box"><span id="seconds">00</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const target = new Date("2025-01-23T00:00:00").getTime();
+
+const daysEl=document.getElementById("days");
+const hoursEl=document.getElementById("hours");
+const minutesEl=document.getElementById("minutes");
+const secondsEl=document.getElementById("seconds");
+
+const timer=setInterval(()=>{
+  const now=new Date().getTime();
+  const diff=target-now;
+
+  if(diff>0){
+    daysEl.innerHTML=Math.floor(diff/(1000*60*60*24));
+    hoursEl.innerHTML=Math.floor(diff/(1000*60*60)%24);
+    minutesEl.innerHTML=Math.floor(diff/(1000*60)%60);
+    secondsEl.innerHTML=Math.floor(diff/1000%60);
+  }else{
+    clearInterval(timer);
+    showBirthday();
+  }
+},1000);
+
+function showBirthday(){
+  document.getElementById("center").innerHTML=`
+    <div class="birthday">
+      <h2>🎉 HAPPY BIRTHDAY 🎉</h2>
+      <div class="sub">🎆 Celebrate with Fireworks 🎆</div>
+    </div>
+  `;
+
+  document.getElementById("leftSide").style.display="flex";
+  document.getElementById("rightSide").style.display="flex";
+
+  startCrackers();
+}
+
+function fireCracker(x,y){
+  const colors=["#ffd700","#ff004f","#00f2fe","#00ff7f","#ff8c00"];
+  for(let i=0;i<35;i++){
+    const s=document.createElement("div");
+    s.className="firework";
+    s.style.left=x+"px";
+    s.style.top=y+"px";
+    s.style.background=colors[Math.floor(Math.random()*colors.length)];
+    const a=Math.random()*Math.PI*2;
+    const d=Math.random()*120+40;
+    s.style.setProperty("--x",Math.cos(a)*d+"px");
+    s.style.setProperty("--y",Math.sin(a)*d+"px");
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1200);
+  }
+}
+
+function startCrackers(){
+  setInterval(()=>{
+    fireCracker(
+      Math.random()*window.innerWidth,
+      Math.random()*window.innerHeight/1.3
+    );
+  },700);
+}
+</script>
+
+</body>
+</html>

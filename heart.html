@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #151515, #020102);
+      overflow: hidden;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .start-screen {
+      text-align: center;
+    }
+
+    .start-button {
+      padding: 16px 32px;
+      font-size: 20px;
+      border: none;
+      border-radius: 30px;
+      background-color: #d63384;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .start-button:hover {
+      background-color: #ad1a67;
+    }
+
+    .main-ui {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .heart {
+      width: 10vmin;
+      height: 10vmin;
+      background-color: red;
+      transform: rotate(-45deg);
+      position: relative;
+      margin: auto;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 10vmin;
+      height: 10vmin;
+      background-color: red;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -5vmin;
+      left: 0;
+    }
+
+    .heart::after {
+      top: 0;
+      left: 5vmin;
+    }
+
+    .animate-heart {
+      animation: heartbeat 1s infinite;
+    }
+
+    @keyframes heartbeat {
+      0% {
+        transform: scale(1) rotate(-45deg);
+      }
+      25% {
+        transform: scale(1.2) rotate(-45deg);
+      }
+      50% {
+        transform: scale(1.4) rotate(-45deg);
+      }
+      100% {
+        transform: scale(1) rotate(-45deg);
+      }
+    }
+
+    .message {
+      font-size: 5vmin;
+      color: #cc0033;
+      margin-top: px;
+      margin-bottom: 140px;
+      text-shadow: 1px 1px #fff;
+      max-width: 90%;
+    }
+
+    .bg-heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      transform: rotate(45deg);
+    }
+
+    .bg-heart::before,
+    .bg-heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: inherit;
+    }
+
+    .bg-heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .bg-heart::after {
+      top: 0;
+      left: -10px;
+    }
+
+    @keyframes bgFloat {
+      0% {
+        bottom: -30px;
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        bottom: 100%;
+        transform: rotate(45deg) translateX(30px);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .message {
+        font-size: 4.5vmin;
+      }
+
+      .start-button {
+        font-size: 16px;
+        padding: 12px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Initial Start Button -->
+  <div class="start-screen" id="startScreen">
+    <h2 style="margin-bottom: 20px; color: #fff;">Please Click the Start</h2>
+    <button class="start-button" onclick="startLove()">Start</button>
+  </div>
+
+  <!-- Main UI -->
+  <div class="main-ui" id="mainUI">
+    <div class="heart" id="mainHeart"></div>
+    <div class="message" id="textMessage">I LOVE YOU 💖</div>
+  </div>
+
+  <script>
+    const colors = ['#ffcccc', '#ff9999', '#ff6666', '#ff4d4d'];
+    const messages = [
+      "I LOVE YOU 💖",
+      "You make my heart beat ﮩ٨ـﮩﮩ٨ـ🫀ﮩ٨ـﮩﮩ٨ـ",
+      "You are my life line 🫵🏻ـــــــــــــــﮩ٨ـ❤️️",
+      "You are my Happiness 😊"
+    ];
+
+    function startLove() {
+      document.getElementById("startScreen").style.display = "none";
+      const mainUI = document.getElementById("mainUI");
+      mainUI.style.display = "flex";
+
+      document.getElementById("mainHeart").classList.add("animate-heart");
+
+      for (let i = 0; i < 25; i++) {
+        const bgHeart = document.createElement("div");
+        bgHeart.className = "bg-heart";
+        bgHeart.style.left = `${Math.random() * 100}vw`;
+        bgHeart.style.bottom = "-30px";
+        bgHeart.style.animation = `bgFloat ${5 + Math.random() * 5}s linear infinite`;
+        bgHeart.style.background = colors[Math.floor(Math.random() * colors.length)];
+        document.body.appendChild(bgHeart);
+      }
+
+      let i = 0;
+      setInterval(() => {
+        i = (i + 1) % messages.length;
+        document.getElementById("textMessage").textContent = messages[i];
+      }, 2000);
+    }
+  </script>
+
+</body>
+</html>
